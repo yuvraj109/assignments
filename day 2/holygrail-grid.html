@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Holy Grail Layout - Grid</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    .grid-container {
+      display: grid;
+      grid-template-areas:
+        "header header header"
+        "nav main aside"
+        "footer footer footer";
+      grid-template-columns: 200px 1fr 200px;
+      grid-template-rows: auto 1fr auto;
+      min-height: 100vh;
+    }
+
+    header {
+      grid-area: header;
+      background: #333;
+      color: white;
+      padding: 1rem;
+      text-align: center;
+    }
+
+
+
+
+    nav {
+      grid-area: nav;
+      background: #ccc;
+        text-align: center;
+        align-content: center;
+    }
+
+    main {
+      grid-area: main;
+      background: #f5f5f5;
+      text-align: center;
+      align-content: center;
+    }
+
+    aside {
+      grid-area: aside;
+      background: #ccc;
+      text-align: center;
+      align-content: center;
+    }
+    footer {
+      grid-area: footer;
+      background: #333;
+      color: white;
+      padding: 1rem;
+      text-align: center;
+    }
+
+    @media (max-width: 768px) {
+      .grid-container {
+        grid-template-areas:
+           "header"
+           "nav"
+          "main"
+          "aside"
+          "footer" ;
+        grid-template-columns: 100vw;
+        grid-template-rows: 50px 100px auto 100px 50px;
+      }
+
+      nav, aside {
+        width: 100%;
+        padding: 30px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="grid-container">
+    <header>header</header>
+    <nav>nav</nav>
+    <main>Main</main>
+    <aside>aside</aside>
+    <footer>footer</footer>
+  </div>
+</body>
+</html>

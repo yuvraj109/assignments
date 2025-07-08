@@ -1,0 +1,1295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard - Admin Panel | Omniful</title>
+  <meta name="description" content="Complete admin dashboard with analytics, user management, and warehouse overview. Fully accessible with ARIA support.">
+  <meta name="robots" content="noindex, nofollow">
+  
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    .skip-link{
+      position: absolute;
+      top: -40px;
+      left: 6px;
+      background: #2563eb;
+      color: white;
+      padding: 8px;
+      text-decoration: none;
+      border-radius: 4px;
+      z-index: 1000;
+      font-weight: 500;
+    }
+    
+    .skip-link:focus {
+      top: 6px;
+      outline: 2px solid #ffffff;
+      outline-offset: 2px;
+    }
+    
+    .header {
+      background: white;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    
+    .header-container {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 0 1rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      min-height: 70px;
+    }
+    
+    .logo {
+      font-size: 1.5rem;
+      font-weight: bold;
+      color: #2563eb;
+      text-decoration: none;
+    }
+    
+    .logo:focus {
+      outline: 2px solid #2563eb;
+      outline-offset: 2px;
+      border-radius: 4px;
+    }
+    .header-nav {
+      display: flex;
+      align-items: center;
+    }
+    
+    .header-nav-list {
+      display: flex;
+      list-style: none;
+      align-items: center;
+      margin: 0;
+      padding: 0;
+    }
+    
+    .nav-item {
+      position: relative;
+    }
+    
+    .nav-link {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      color: #64748b;
+      text-decoration: none;
+      font-weight: 500;
+      padding: 1rem 1.5rem;
+      border-radius: 6px;
+      transition: all 0.3s ease;
+      white-space: nowrap;
+    }
+    
+    .nav-link:hover,
+    .nav-link:focus {
+      color: #2563eb;
+      background: rgba(37, 99, 235, 0.1);
+      outline: none;
+    }
+    
+    .nav-link[aria-current="page"] {
+      color: #2563eb;
+      background: rgba(37, 99, 235, 0.1);
+      font-weight: 600;
+    }
+    
+    
+    .dropdown-toggle::after {
+      content: '▼';
+      font-size: 0.8rem;
+      transition: transform 0.3s ease;
+      margin-left: 0.25rem;
+    }
+    
+    .dropdown-toggle[aria-expanded="true"]::after {
+      transform: rotate(180deg);
+    }
+    
+    .dropdown-menu {
+      position: absolute;
+      top: 100%;
+      left: 0;
+      background: white;
+      border: 1px solid #e2e8f0;
+      border-radius: 8px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+      padding: 0.5rem 0;
+      min-width: 200px;
+      z-index: 1000;
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(-10px);
+      transition: all 0.3s ease;
+    }
+    
+    .dropdown-menu.show {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+    }
+    
+    .dropdown-menu .nav-link {
+      padding: 0.75rem 1rem;
+      color: #334155;
+      border-radius: 4px;
+      margin: 0 0.5rem;
+      display: block;
+    }
+    
+    .dropdown-menu .nav-link:hover,
+    .dropdown-menu .nav-link:focus {
+      background: #f8fafc;
+      color: #2563eb;
+    }
+    
+    .dropdown-menu .nav-link[aria-current="page"] {
+      background: #2563eb;
+      color: white;
+    }
+    .dropdown-divider {
+      height: 1px;
+      background: #e2e8f0;
+      margin: 0.5rem 0;
+    }
+    .user-menu {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      position: relative;
+    }
+    
+    .user-avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #2563eb, #3b82f6);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    
+    .user-avatar:hover,
+    .user-avatar:focus {
+      outline: 2px solid #2563eb;
+      outline-offset: 2px;
+      transform: scale(1.05);
+    }
+    
+    .user-dropdown {
+      position: absolute;
+      top: 100%;
+      right: 0;
+      background: white;
+      border: 1px solid #e2e8f0;
+      border-radius: 8px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+      padding: 0.5rem 0;
+      min-width: 200px;
+      z-index: 1000;
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(-10px);
+      transition: all 0.3s ease;
+      margin-top: 0.5rem;
+    }
+    
+    .user-dropdown.show {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+    }
+    
+    .user-info {
+      padding: 1rem;
+      border-bottom: 1px solid #e2e8f0;
+    }
+    
+    .user-name {
+      font-weight: 600;
+      color: #1e293b;
+      margin-bottom: 0.25rem;
+    }
+    
+    .user-email {
+      color: #64748b;
+      font-size: 0.9rem;
+    }
+    
+    .user-dropdown .nav-link {
+      padding: 0.75rem 1rem;
+      color: #334155;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      transition: all 0.3s ease;
+    }
+    
+    .user-dropdown .nav-link:hover,
+    .user-dropdown .nav-link:focus {
+      background: #f8fafc;
+      color: #2563eb;
+      outline: none;
+    }
+    
+    .user-dropdown .nav-link .icon {
+      font-size: 1.1rem;
+      width: 20px;
+    }
+    
+    .mobile-menu-toggle {
+      display: none;
+      background: none;
+      border: none;
+      font-size: 1.5rem;
+      cursor: pointer;
+      padding: 0.5rem;
+      color: #333;
+      border-radius: 4px;
+    }
+    
+    .mobile-menu-toggle:focus {
+      outline: 2px solid #2563eb;
+      outline-offset: 2px;
+    }
+    
+    .hamburger {
+      display: block;
+      width: 20px;
+      height: 2px;
+      background: #333;
+      position: relative;
+      transition: all 0.3s ease;
+    }
+    
+    .hamburger::before,
+    .hamburger::after {
+      content: '';
+      display: block;
+      width: 20px;
+      height: 2px;
+      background: #333;
+      position: absolute;
+      transition: all 0.3s ease;
+    }
+    
+    .hamburger::before {
+      top: -6px;
+    }
+    
+    .hamburger::after {
+      top: 6px;
+    }
+    
+    .mobile-menu-toggle[aria-expanded="true"] .hamburger {
+      transform: rotate(45deg);
+    }
+    
+    .mobile-menu-toggle[aria-expanded="true"] .hamburger::before {
+      transform: rotate(90deg);
+      top: 0;
+    }
+    
+    .mobile-menu-toggle[aria-expanded="true"] .hamburger::after {
+      opacity: 0;
+    }
+    .main-layout {
+      display: grid;
+      grid-template-columns: 250px 1fr;
+      min-height: calc(100vh - 70px);
+    }
+    
+    .sidebar {
+      background: white;
+      border-right: 1px solid #e2e8f0;
+      padding: 2rem 0;
+    }
+    
+    .sidebar-nav {
+      list-style: none;
+      padding: 0 1rem;
+    }
+    
+    .sidebar-nav > li {
+      margin-bottom: 0.5rem;
+    }
+    
+    .sidebar-nav a {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 0.75rem 1rem;
+      color: #64748b;
+      text-decoration: none;
+      font-weight: 500;
+      border-radius: 8px;
+      transition: all 0.3s ease;
+    }
+    
+    .sidebar-nav a:hover,
+    .sidebar-nav a:focus {
+      background: #f1f5f9;
+      color: #2563eb;
+      outline: none;
+    }
+    
+    .sidebar-nav a[aria-current="page"] {
+      background: #2563eb;
+      color: white;
+    }
+    
+    .sidebar-nav .icon {
+      font-size: 1.2rem;
+      width: 20px;
+    }
+    
+    .main-content {
+      padding: 2rem;
+      overflow-y: auto;
+    }
+    
+    .page-header {
+      margin-bottom: 2rem;
+    }
+    
+    .page-title {
+      font-size: 2rem;
+      color: #1e293b;
+      margin-bottom: 0.5rem;
+    }
+    
+    .page-subtitle {
+      color: #64748b;
+      font-size: 1.1rem;
+    }
+    
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1.5rem;
+      margin-bottom: 2rem;
+    }
+    
+    .stat-card {
+      background: white;
+      padding: 1.5rem;
+      border-radius: 12px;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+      border: 1px solid #e2e8f0;
+    }
+    
+    .stat-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1rem;
+    }
+    
+    .stat-title {
+      font-size: 0.9rem;
+      color: #64748b;
+      font-weight: 500;
+    }
+    
+    .stat-icon {
+      font-size: 1.5rem;
+      width: 40px;
+      height: 40px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    
+    .stat-icon.blue { background: rgba(37, 99, 235, 0.1); color: #2563eb; }
+    .stat-icon.green { background: rgba(34, 197, 94, 0.1); color: #22c55e; }
+    .stat-icon.yellow { background: rgba(251, 191, 36, 0.1); color: #fbbf24; }
+    .stat-icon.red { background: rgba(239, 68, 68, 0.1); color: #ef4444; }
+    
+    .stat-value {
+      font-size: 2rem;
+      font-weight: 700;
+      color: #1e293b;
+      margin-bottom: 0.25rem;
+    }
+    
+    .stat-change {
+      font-size: 0.9rem;
+      font-weight: 500;
+    }
+    
+    .stat-change.positive { color: #22c55e; }
+    .stat-change.negative { color: #ef4444; }
+    
+    .chart-section {
+      background: white;
+      padding: 2rem;
+      border-radius: 12px;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+      border: 1px solid #e2e8f0;
+      margin-bottom: 2rem;
+    }
+    
+    .chart-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1.5rem;
+    }
+    
+    .chart-title {
+      font-size: 1.3rem;
+      color: #1e293b;
+      font-weight: 600;
+    }
+    
+    .chart-placeholder {
+      height: 300px;
+      background: linear-gradient(135deg, #f1f5f9 0%, #e2e8f0 100%);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #64748b;
+      font-weight: 500;
+      border: 2px dashed #cbd5e1;
+    }
+    
+    .table-section {
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+      border: 1px solid #e2e8f0;
+      overflow: hidden;
+    }
+    
+    .table-header {
+      padding: 1.5rem 2rem;
+      border-bottom: 1px solid #e2e8f0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    
+    .table-title {
+      font-size: 1.3rem;
+      color: #1e293b;
+      font-weight: 600;
+    }
+    
+    .table-actions {
+      display: flex;
+      gap: 1rem;
+    }
+    
+    .btn {
+      padding: 0.5rem 1rem;
+      border: none;
+      border-radius: 6px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    
+    .btn-primary {
+      background: #2563eb;
+      border: 1px solid gray;
+      color: white;
+    }
+    
+    .btn-primary:hover,
+    .btn-primary:focus {
+      background: #1d4ed8;
+      outline: none;
+    }
+    
+    .btn-secondary {
+      background: #f8fafc;
+      color: #64748b;
+      border: 1px solid #e2e8f0;
+    }
+    
+    .btn-secondary:hover,
+    .btn-secondary:focus {
+      background: #f1f5f9;
+      color: #2563eb;
+      outline: none;
+    }
+    
+    .data-table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    
+    .data-table th,
+    .data-table td {
+      padding: 1rem 2rem;
+      text-align: left;
+      border-bottom: 1px solid #e2e8f0;
+    }
+    
+    .data-table th {
+      background: #f8fafc;
+      font-weight: 600;
+      color: #1e293b;
+      font-size: 0.9rem;
+    }
+    
+    .data-table tr:hover {
+      background: #f8fafc;
+    }
+    
+    .status-badge {
+      padding: 0.25rem 0.75rem;
+      border-radius: 20px;
+      font-size: 0.85rem;
+      font-weight: 500;
+    }
+    
+    .status-badge.active {
+      background: rgba(34, 197, 94, 0.1);
+      color: #22c55e;
+    }
+    
+    .status-badge.pending {
+      background: rgba(251, 191, 36, 0.1);
+      color: #fbbf24;
+    }
+    
+    .status-badge.inactive {
+      background: rgba(148, 163, 184, 0.1);
+      color: #64748b;
+    }
+    
+    .activity-feed {
+      background: white;
+      padding: 2rem;
+      border-radius: 12px;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+      border: 1px solid #e2e8f0;
+    }
+    
+    .activity-title {
+      font-size: 1.3rem;
+      color: #1e293b;
+      font-weight: 600;
+      margin-bottom: 1.5rem;
+    }
+    
+    .activity-item {
+      display: flex;
+      gap: 1rem;
+      padding: 1rem 0;
+      border-bottom: 1px solid #f1f5f9;
+    }
+    
+    .activity-item:last-child {
+      border-bottom: none;
+    }
+    
+    .activity-avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #64748b, #94a3b8);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-weight: 600;
+      font-size: 0.9rem;
+      flex-shrink: 0;
+    }
+    
+    .activity-content {
+      flex: 1;
+    }
+    
+    .activity-text {
+      color: #1e293b;
+      margin-bottom: 0.25rem;
+    }
+    
+    .activity-time {
+      color: #64748b;
+      font-size: 0.85rem;
+    }
+    
+    .dashboard-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+      margin-bottom: 2rem;
+    }
+    
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    }
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+    @media (max-width: 1024px) {
+      .main-layout {
+        grid-template-columns: 1fr;
+      }
+      
+      .sidebar {
+        display: none;
+      }
+      
+      .stats-grid {
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      }
+      
+      .dashboard-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+    
+    @media (max-width: 768px) {
+      .mobile-menu-toggle {
+        display: block;
+      }
+      
+      .header-nav {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        width: 100%;
+        background: white;
+        border-top: 1px solid #e2e8f0;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        opacity: 0;
+        visibility: hidden;
+        transform: translateY(-10px);
+        transition: all 0.3s ease;
+      }
+      
+      .header-nav.show {
+        opacity: 1;
+        visibility: visible;
+        transform: translateY(0);
+      }
+      
+      .header-nav-list {
+        flex-direction: column;
+        padding: 1rem 0;
+      }
+      
+      .nav-item {
+        width: 100%;
+        border-bottom: 1px solid #f1f5f9;
+      }
+      
+      .nav-item:last-child {
+        border-bottom: none;
+      }
+      
+      .nav-link {
+        padding: 1rem 1.5rem;
+        justify-content: space-between;
+        border-radius: 0;
+      }
+      
+      .dropdown-menu {
+        position: static;
+        opacity: 1;
+        visibility: visible;
+        transform: none;
+        box-shadow: none;
+        border: none;
+        background: #f8fafc;
+        margin-left: 1rem;
+      }
+      
+      .main-content {
+        padding: 1rem;
+      }
+      
+      .stats-grid {
+        grid-template-columns: 1fr;
+      }
+      
+      .chart-header,
+      .table-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1rem;
+      }
+      
+      .table-actions {
+        width: 100%;
+        justify-content: flex-start;
+      }
+      
+      .data-table {
+        font-size: 0.9rem;
+      }
+      
+      .data-table th,
+      .data-table td {
+        padding: 0.75rem 1rem;
+      }
+      
+      .user-dropdown {
+        right: 1rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <a href="#main-content" class="skip-link">Skip to main content</a>
+  <header class="header">
+    <div class="header-container">
+      <a href="#" class="logo">Omniful Admin</a>
+      
+      <button 
+        class="mobile-menu-toggle" 
+        aria-controls="header-navigation" 
+        aria-expanded="false"
+        aria-label="Toggle navigation menu"
+      >
+        <span class="hamburger"></span>
+      </button>
+
+      <nav class="header-nav" id="header-navigation" role="navigation" aria-label="Main navigation">
+        <ul class="header-nav-list">
+          <li class="nav-item">
+            <a href="#" class="nav-link" aria-current="page">📊 Dashboard</a>
+          </li>
+          
+          <li class="nav-item">
+            <a href="#" 
+               class="nav-link dropdown-toggle" 
+               aria-expanded="false"
+               aria-haspopup="true"
+               aria-controls="inventory-menu">
+              Inventory
+            </a>
+            <ul class="dropdown-menu" id="inventory-menu">
+              <li><a href="#" class="nav-link">All Products</a></li>
+              <li><a href="#" class="nav-link">Add New Product</a></li>
+              <li><a href="#" class="nav-link">Categories</a></li>
+              <li><a href="#" class="nav-link">Stock Alerts</a></li>
+              <div class="dropdown-divider"></div>
+              <li><a href="#" class="nav-link">Import/Export</a></li>
+            </ul>
+          </li>
+          
+          <li class="nav-item">
+            <a href="landing.html" 
+               class="nav-link " 
+               >
+              landing page
+            </a>
+           
+          </li>
+          
+          <li class="nav-item">
+            <a href="form.html" 
+               class="nav-link " 
+              Reports>
+            Multi Step Form</a>
+
+          </li>
+          
+          
+          <li class="nav-item">
+            <a href="blog.html" 
+               class="nav-link " 
+              Reports>
+            Blog Layout</a>
+
+          </li>
+        </ul>
+      </nav>
+      
+      <div class="user-menu">
+        <div class="user-avatar" 
+             tabindex="0" 
+             role="button" 
+             aria-label="Open user menu"
+             aria-expanded="false"
+             aria-haspopup="true"
+             aria-controls="user-dropdown">
+          YY
+        </div>
+        <div class="user-dropdown" id="user-dropdown">
+          <div class="user-info">
+            <div class="user-name">Yuvraj yadav</div>
+            <div class="user-email">yuvrajyadav@gmail.com</div>
+          </div>
+          <a href="#" class="nav-link">
+            <span class="icon">👤</span>
+            Profile
+          </a>
+          <a href="#" class="nav-link">
+            Account Settings
+          </a>
+          <a href="#" class="nav-link">
+            Notifications
+          </a>
+          <div class="dropdown-divider"></div>
+          <a href="#" class="nav-link">
+            Help & Support
+          </a>
+          <a href="#" class="nav-link">
+            Sign Out
+          </a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <div class="main-layout">
+    <aside class="sidebar" role="navigation" aria-label="Sidebar navigation">
+      <nav>
+        <ul class="sidebar-nav">
+          <li>
+            <a href="#" aria-current="page">
+              <span class="icon">📊</span>
+              Dashboard
+            </a>
+          </li>
+          <li>
+            <a href="#">
+              
+              Inventory
+            </a>
+          </li>
+          <li>
+            <a href="#">
+              Orders
+            </a>
+          </li>
+          <li>
+            <a href="#">
+              Users
+            </a>
+          </li>
+          <li>
+            <a href="#">
+             
+              Reports
+            </a>
+          </li>
+          <li>
+            <a href="#">
+              <span class="icon">🔧</span>
+              Settings
+            </a>
+          </li>
+          <li>
+            <a href="#">
+              <span class="icon">❓</span>
+              Help & Support
+            </a>
+          </li>
+        </ul>
+      </nav>
+    </aside>
+    
+    <main id="main-content" class="main-content">
+      
+      <header class="page-header">
+        <h1 class="page-title">Dashboard</h1>
+        <p class="page-subtitle">Welcome back! Here's what's happening in your warehouse.</p>
+      </header>
+      
+      <section class="stats-grid" aria-labelledby="stats-heading">
+        <h2 id="stats-heading" class="sr-only">Dashboard Statistics</h2>
+        
+        <article class="stat-card">
+          <div class="stat-header">
+            <h3 class="stat-title">Total Products</h3>
+           
+          </div>
+          <div class="stat-value">1,247</div>
+          <div class="stat-change positive">+12% from last month</div>
+        </article>
+        
+        <article class="stat-card">
+          <div class="stat-header">
+            <h3 class="stat-title">Orders Today</h3>
+          </div>
+          <div class="stat-value">342</div>
+          <div class="stat-change positive">+8% from yesterday</div>
+        </article>
+        
+        <article class="stat-card">
+          <div class="stat-header">
+            <h3 class="stat-title">Low Stock Items</h3>
+          </div>
+          <div class="stat-value">23</div>
+          <div class="stat-change negative">+5 from last week</div>
+        </article>
+        
+        <article class="stat-card">
+          <div class="stat-header">
+            <h3 class="stat-title">Active Users</h3>
+            
+          </div>
+          <div class="stat-value">89</div>
+          <div class="stat-change positive">+3% from last month</div>
+        </article>
+      </section>
+      
+
+      <div class="dashboard-grid">
+        
+        <section class="table-section" aria-labelledby="recent-orders-heading">
+          <header class="table-header">
+            <h2 id="recent-orders-heading" class="table-title">Recent Orders</h2>
+            <div class="table-actions">
+              <a href="#" class="btn btn-primary">+ New Order</a>
+              <button class="btn btn-secondary">View All</button>
+            </div>
+          </header>
+          <div role="region" aria-labelledby="recent-orders-heading" tabindex="0">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th scope="col">Order ID</th>
+                  <th scope="col">Customer</th>
+                  <th scope="col">Status</th>
+                  <th scope="col">Date</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>
+                    <strong>ORD-2025-001</strong>
+                    <div style="color: #64748b; font-size: 0.9rem;">Electronics - 5 items</div>
+                  </td>
+                  <td>Sarah Johnson</td>
+                  <td><span class="status-badge active">Shipped</span></td>
+                  <td>Jan 7, 2025</td>
+                </tr>
+                <tr>
+                  <td>
+                    <strong>ORD-2025-002</strong>
+                    <div style="color: #64748b; font-size: 0.9rem;">Clothing - 3 items</div>
+                  </td>
+                  <td>Mike Chen</td>
+                  <td><span class="status-badge pending">Processing</span></td>
+                  <td>Jan 6, 2025</td>
+                </tr>
+                <tr>
+                  <td>
+                    <strong>ORD-2025-003</strong>
+                    <div style="color: #64748b; font-size: 0.9rem;">Home & Garden - 2 items</div>
+                  </td>
+                  <td>Lisa Park</td>
+                  <td><span class="status-badge active">Delivered</span></td>
+                  <td>Jan 5, 2025</td>
+                </tr>
+                <tr>
+                  <td>
+                    <strong>ORD-2025-004</strong>
+                    <div style="color: #64748b; font-size: 0.9rem;">Sports - 1 item</div>
+                  </td>
+                  <td>David Wilson</td>
+                  <td><span class="status-badge inactive">Cancelled</span></td>
+                  <td>Jan 4, 2025</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+        
+
+        <section class="activity-feed" aria-labelledby="activity-heading">
+          <h2 id="activity-heading" class="activity-title">Recent Activity</h2>
+          
+          <article class="activity-item">
+            <div class="activity-avatar">SJ</div>
+            <div class="activity-content">
+              <div class="activity-text">
+                <strong>Sarah Johnson</strong> processed order ORD-2025-001 for shipment
+              </div>
+              <div class="activity-time">2 hours ago</div>
+            </div>
+          </article>
+          
+          <article class="activity-item">
+            <div class="activity-avatar">MC</div>
+            <div class="activity-content">
+              <div class="activity-text">
+                <strong>Mike Chen</strong> updated inventory for 15 products
+              </div>
+              <div class="activity-time">4 hours ago</div>
+            </div>
+          </article>
+          
+          <article class="activity-item">
+            <div class="activity-avatar">LP</div>
+            <div class="activity-content">
+              <div class="activity-text">
+                <strong>Lisa Park</strong> completed order fulfillment for 8 orders
+              </div>
+              <div class="activity-time">6 hours ago</div>
+            </div>
+          </article>
+          
+          <article class="activity-item">
+            <div class="activity-avatar">DW</div>
+            <div class="activity-content">
+              <div class="activity-text">
+                <strong>David Wilson</strong> added new products to catalog
+              </div>
+              <div class="activity-time">8 hours ago</div>
+            </div>
+          </article>
+          
+          <article class="activity-item">
+            <div class="activity-avatar">JD</div>
+            <div class="activity-content">
+              <div class="activity-text">
+                <strong>John Doe</strong> generated monthly inventory report
+              </div>
+              <div class="activity-time">12 hours ago</div>
+            </div>
+          </article>
+          
+        </section>
+        
+      </div>
+      
+    </main>
+    
+  </div>
+  
+  <script>
+
+
+    document.addEventListener('DOMContentLoaded', function() {
+      const mobileMenuToggle = document.querySelector('.mobile-menu-toggle');
+
+      const headerNav = document.querySelector('.header-nav');
+      
+      if (mobileMenuToggle) {
+        mobileMenuToggle.addEventListener('click', function() {
+          const isExpanded = this.getAttribute('aria-expanded') === 'true';
+          
+          this.setAttribute('aria-expanded', !isExpanded);
+          headerNav.classList.toggle('show');
+        });
+      }
+      const dropdownToggles = document.querySelectorAll('.dropdown-toggle');
+      
+      dropdownToggles.forEach(toggle =>{
+        const navItem = toggle.closest('.nav-item');
+        const menu = navItem.querySelector('.dropdown-menu');
+        
+        if (menu) {
+          toggle.addEventListener('click', function(e) {
+            e.preventDefault();
+            
+            const isExpanded = this.getAttribute('aria-expanded') === 'true';
+            
+
+            dropdownToggles.forEach(otherToggle => {
+              if (otherToggle !== this) {
+                otherToggle.setAttribute('aria-expanded', 'false');
+                const otherMenu = otherToggle.closest('.nav-item').querySelector('.dropdown-menu');
+                if (otherMenu) {
+                  otherMenu.classList.remove('show');
+                }
+              }
+            });
+            
+            
+            this.setAttribute('aria-expanded', !isExpanded);
+            menu.classList.toggle('show');
+          });
+        }
+      });
+      
+
+      const userAvatar = document.querySelector('.user-avatar');
+
+      const userDropdown = document.querySelector('.user-dropdown');
+      
+      if (userAvatar && userDropdown) {
+        userAvatar.addEventListener('click', function() {
+          const isExpanded = this.getAttribute('aria-expanded') === 'true';
+          
+          this.setAttribute('aria-expanded', !isExpanded);
+          userDropdown.classList.toggle('show');
+        });
+        
+
+        userAvatar.addEventListener('keydown', function(e) {
+          if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            this.click();
+          }
+        });
+      }
+      
+
+      document.addEventListener('click', function(e) {
+
+        if (!e.target.closest('.nav-item')) {
+          dropdownToggles.forEach(toggle => {
+
+            toggle.setAttribute('aria-expanded', 'false');
+            const menu = toggle.closest('.nav-item').querySelector('.dropdown-menu');
+            if (menu){
+              menu.classList.remove('show');
+            }
+          });
+        }
+        
+        if (!e.target.closest('.user-menu')) {
+
+          if (userAvatar) {
+
+            userAvatar.setAttribute('aria-expanded', 'false');
+          }
+          if (userDropdown) {
+            userDropdown.classList.remove('show');
+          }
+        }
+      });
+      
+
+
+
+
+      document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') {
+          dropdownToggles.forEach(toggle => {
+
+            const menu = toggle.closest('.nav-item').querySelector('.dropdown-menu');
+            if (menu && menu.classList.contains('show')) {
+              toggle.setAttribute('aria-expanded', 'false');
+              menu.classList.remove('show');
+              toggle.focus();
+            }
+          });
+          
+          if (userDropdown && userDropdown.classList.contains('show')) {
+            userAvatar.setAttribute('aria-expanded', 'false');
+            userDropdown.classList.remove('show');
+            userAvatar.focus();
+          }
+        }
+      });
+      
+      document.addEventListener('keydown', function(e) {
+        if (e.key === 'ArrowDown' || e.key === 'ArrowUp') {
+          const activeElement = document.activeElement;
+          const currentDropdown = activeElement.closest('.nav-item');
+          
+          if (currentDropdown) {
+            const menu = currentDropdown.querySelector('.dropdown-menu');
+            const links = menu.querySelectorAll('.nav-link');
+            
+            if (menu.classList.contains('show')) {
+              e.preventDefault();
+              
+              let currentIndex = Array.from(links).indexOf(activeElement);
+              
+              if (e.key === 'ArrowDown') {
+                currentIndex = (currentIndex + 1) % links.length;
+              } else {
+                currentIndex = (currentIndex - 1 + links.length) % links.length;
+              }
+              
+              links[currentIndex].focus();
+            }
+          }
+        }
+      });
+      
+
+      const navLinks = document.querySelectorAll('.nav-link');
+      navLinks.forEach(link => {
+        link.addEventListener('click', function() {
+          if (window.innerWidth <= 768) {
+            if (mobileMenuToggle) {
+              mobileMenuToggle.setAttribute('aria-expanded', 'false');
+            }
+            if (headerNav) {
+              headerNav.classList.remove('show');
+            }
+          }
+        });
+      });
+      
+
+
+      window.addEventListener('resize', function() {
+        if (window.innerWidth > 768) {
+          if (mobileMenuToggle) {
+            mobileMenuToggle.setAttribute('aria-expanded', 'false');
+          }
+
+
+          if (headerNav) {
+            headerNav.classList.remove('show');
+          }
+        }
+      });
+      
+      const tableRows = document.querySelectorAll('.data-table tbody tr');
+      tableRows.forEach(row => {
+        row.addEventListener('click', function() {
+
+          console.log('Table row clicked:', this);
+        });
+      });
+      
+      const activityItems = document.querySelectorAll('.activity-item');
+      activityItems.forEach(item => {
+
+        item.addEventListener('click', function() {
+          console.log('Activity item clicked:', this);
+        });
+      });
+    });
+  </script>
+  
+</body>
+</html>

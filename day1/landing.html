@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Omniful - Smart Warehouse Management Solutions | Free Demo</title>
+  <meta name="description" content="Transform your warehouse operations with Omniful. Advanced inventory management, real-time tracking, and automated workflows. Start your free demo today.">
+  <meta name="keywords" content="warehouse management, inventory tracking, logistics, supply chain, automated warehousing, inventory management system">
+  <meta name="author" content="Omniful">
+  <meta name="robots" content="index, follow">
+  
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://omniful.ai">
+  <meta property="og:title" content="Omniful - Smart Warehouse Management Solutions">
+  <meta property="og:description" content="Transform your warehouse operations with Omniful. Advanced inventory management, real-time tracking, and automated workflows.">
+  <meta property="og:image" content="https://omniful.ai/images/og-image.jpg">
+  <meta property="og:site_name" content="Omniful">
+  
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Omniful - Smart Warehouse Management Solutions">
+  <meta name="twitter:description" content="Transform your warehouse operations with Omniful. Advanced inventory management, real-time tracking, and automated workflows.">
+  <meta name="twitter:image" content="https://omniful.ai/images/twitter-image.jpg">
+  
+  <link rel="canonical" href="https://omniful.ai">
+  
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "Omniful",
+    "description": "Smart warehouse management system with advanced inventory tracking and automated workflows",
+    "url": "https://omniful.ai",
+    "logo": "https://omniful.com/logo.png"
+  }
+  </script>
+  
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 1rem;
+    }
+    header {
+      background: white;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    .header-content {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 0;
+    }
+    
+    .logo {
+      font-size: 1.5rem;
+      font-weight: bold;
+      color: #2563eb;
+      text-decoration: none;
+    }
+    .nav {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+    }
+    
+    .nav a {
+      color: #666;
+      text-decoration: none;
+      font-weight: 500;
+      transition: color 0.3s;
+    }
+    
+    .nav a:hover {
+      color: #2563eb;
+    }
+    
+    .cta-btn {
+      background: #2563eb;
+      color: white;
+      padding: 0.5rem 1rem;
+      border-radius: 5px;
+      text-decoration: none;
+      font-weight: 500;
+      transition: background 0.3s;
+    }
+    
+    .cta-btn:hover {
+      background: #1d4ed8;
+    }
+    
+    .hero {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      padding: 4rem 0;
+      text-align: center;
+    }
+    
+    .hero h1 {
+      font-size: 3rem;
+      margin-bottom: 1rem;
+      font-weight: 700;
+    }
+    
+    .hero p {
+      font-size: 1.2rem;
+      margin-bottom: 2rem;
+      opacity: 0.9;
+    }
+    
+    .hero-buttons {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    
+    .btn-primary {
+      background: white;
+      color: #2563eb;
+      padding: 1rem 2rem;
+      border-radius: 5px;
+      text-decoration: none;
+      font-weight: 600;
+      transition: transform 0.3s;
+    }
+    
+    .btn-primary:hover {
+      transform: translateY(-2px);
+    }
+    
+    .btn-secondary {
+      background: transparent;
+      color: white;
+      border: 2px solid white;
+      padding: 1rem 2rem;
+      border-radius: 5px;
+      text-decoration: none;
+      font-weight: 600;
+      transition: all 0.3s;
+    }
+    
+    .btn-secondary:hover {
+      background: white;
+      color: #2563eb;
+    }
+    
+    .features {
+      padding: 4rem 0;
+      background: #f8fafc;
+    }
+    
+    .section-title {
+      text-align: center;
+      font-size: 2.5rem;
+      margin-bottom: 3rem;
+      color: #1f2937;
+    }
+    
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+    }
+    
+    .feature-card {
+      background: white;
+      padding: 2rem;
+      border-radius: 10px;
+      text-align: center;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      transition: transform 0.3s;
+    }
+    
+    .feature-card:hover {
+      transform: translateY(-5px);
+    }
+    
+    .feature-icon {
+      font-size: 3rem;
+      margin-bottom: 1rem;
+    }
+    
+    .feature-card h3 {
+      font-size: 1.5rem;
+      margin-bottom: 1rem;
+      color: #1f2937;
+    }
+    
+    .feature-card p {
+      color: #6b7280;
+    }
+    
+    .stats {
+      padding: 4rem 0;
+      background: #1f2937;
+      color: white;
+    }
+    
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 2rem;
+      text-align: center;
+    }
+    
+    .stat-number {
+      font-size: 3rem;
+      font-weight: bold;
+      color: #60a5fa;
+      display: block;
+    }
+    
+    .stat-label {
+      font-size: 1.1rem;
+      opacity: 0.9;
+    }
+    
+    .cta-section {
+      background: #2563eb;
+      color: white;
+      padding: 4rem 0;
+      text-align: center;
+    }
+    
+    .cta-section h2 {
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+    }
+    
+    .cta-section p {
+      font-size: 1.1rem;
+      margin-bottom: 2rem;
+      opacity: 0.9;
+    }
+    
+    footer {
+      background: #1f2937;
+      color: white;
+      padding: 3rem 0 1rem;
+    }
+    
+    .footer-content {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 2rem;
+      margin-bottom: 2rem;
+    }
+    
+    .footer-section h3 {
+      margin-bottom: 1rem;
+      color: #f3f4f6;
+    }
+    
+    .footer-section ul {
+      list-style: none;
+    }
+    
+    .footer-section li {
+      margin-bottom: 0.5rem;
+    }
+    
+    .footer-section a {
+      color: #d1d5db;
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+    
+    .footer-section a:hover {
+      color: #60a5fa;
+    }
+    
+    .footer-bottom {
+      border-top: 1px solid #374151;
+      padding-top: 2rem;
+      text-align: center;
+      color: #9ca3af;
+    }
+    
+    @media (max-width: 768px) {
+      .nav {
+        display: none;
+      }
+      
+      .hero h1 {
+        font-size: 2rem;
+      }
+      
+      .hero-buttons {
+        flex-direction: column;
+        align-items: center;
+      }
+      
+      .features-grid {
+        grid-template-columns: 1fr;
+      }
+      
+      .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+  </style>
+</head>
+<body>
+  
+  <header>
+    <div class="container">
+      <div class="header-content">
+        <a href="#" class="logo">Omniful</a>
+        <nav>
+          <ul class="nav">
+            <li><a href="#features">Features</a></li>
+            <li><a href="#pricing">Pricing</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#contact">Contact</a></li>
+          </ul>
+        </nav>
+        <a href="#" class="cta-btn">Start Free Demo</a>
+      </div>
+    </div>
+  </header>
+  
+  <section class="hero">
+    <div class="container">
+      <h1>Smart Warehouse Management Solutions</h1>
+      <p>Streamline your warehouse operations with advanced inventory tracking, real-time analytics, and automated workflows. Join 500+ companies optimizing their supply chain.</p>
+      <div class="hero-buttons">
+        <a href="#" class="btn-primary">Start Free Demo</a>
+        <a href="#" class="btn-secondary">View Features</a>
+      </div>
+    </div>
+  </section>
+  
+  <section id="features" class="features">
+    <div class="container">
+      <h2 class="section-title">Why Choose Omniful?</h2>
+      <div class="features-grid">
+        
+        <div class="feature-card">
+          <div class="feature-icon">🏭</div>
+          <h3>Inventory Management</h3>
+          <p>Real-time inventory tracking with automated stock alerts and comprehensive reporting dashboards.</p>
+        </div>
+        
+        <div class="feature-card">
+          <div class="feature-icon">🏭</div>
+          <h3>Order Fulfillment</h3>
+          <p>Streamlined order processing with automated picking, packing, and shipping workflows.</p>
+        </div>
+        
+        <div class="feature-card">
+          <div class="feature-icon">🏭</div>
+          <h3>Analytics & Reporting</h3>
+          <p>Advanced analytics with customizable reports and KPI tracking for data-driven decisions.</p>
+        </div>
+        
+        <div class="feature-card">
+          <div class="feature-icon">🏭</div>
+          <h3>Multi-Warehouse</h3>
+          <p>Manage multiple warehouses from a single platform with centralized control and visibility.</p>
+        </div>
+        
+        <div class="feature-card">
+          <div class="feature-icon">🏭</div>
+          <h3>API Integration</h3>
+          <p>Seamlessly integrate with your existing systems including ERP, CRM, and e-commerce platforms.</p>
+        </div>
+        
+        <div class="feature-card">
+          <div class="feature-icon">🏭</div>
+          <h3>Mobile Access</h3>
+          <p>Access your warehouse data anywhere with our mobile app for on-the-go management.</p>
+        </div>
+        
+      </div>
+    </div>
+  </section>
+  
+  <section class="stats">
+    <div class="container">
+      <div class="stats-grid">
+        <div class="stat-item">
+          <span class="stat-number">500+</span>
+          <span class="stat-label">Companies Trust Us</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-number">99.9%</span>
+          <span class="stat-label">System Uptime</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-number">4.8/5</span>
+          <span class="stat-label">Customer Rating</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-number">24/7</span>
+          <span class="stat-label">Support Available</span>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <section class="cta-section">
+    <div class="container">
+      <h2>Ready to Transform Your Warehouse?</h2>
+      <p>Join hundreds of successful companies who streamlined their operations with Omniful. Get started with a free demo today.</p>
+      <a href="#" class="btn-primary">Start Free Demo Now</a>
+    </div>
+  </section>
+  
+  <footer>
+    <div class="container">
+      <div class="footer-content">
+        
+        <div class="footer-section">
+          <h3>Solutions</h3>
+          <ul>
+            <li><a href="#">Inventory Management</a></li>
+            <li><a href="#">Order Fulfillment</a></li>
+            <li><a href="#">Warehouse Analytics</a></li>
+            <li><a href="#">Multi-Location</a></li>
+          </ul>
+        </div>
+        
+        <div class="footer-section">
+          <h3>Company</h3>
+          <ul>
+            <li><a href="#">About Us</a></li>
+            <li><a href="#">Our Team</a></li>
+            <li><a href="#">Careers</a></li>
+            <li><a href="#">Press</a></li>
+          </ul>
+        </div>
+        
+        <div class="footer-section">
+          <h3>Support</h3>
+          <ul>
+            <li><a href="#">Help Center</a></li>
+            <li><a href="#">Contact Us</a></li>
+            <li><a href="#">Documentation</a></li>
+            <li><a href="#">System Status</a></li>
+          </ul>
+        </div>
+        
+        <div class="footer-section">
+          <h3>Legal</h3>
+          <ul>
+            <li><a href="#">Privacy Policy</a></li>
+            <li><a href="#">Terms of Service</a></li>
+            <li><a href="#">Cookie Policy</a></li>
+            <li><a href="#">Security</a></li>
+          </ul>
+        </div>
+        
+      </div>
+      
+      <div class="footer-bottom">
+        <p>&copy; 2025 Omniful. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+  
+</body>
+</html>

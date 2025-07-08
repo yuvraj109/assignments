@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Simple Dashboard</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background: #f5f5f5;
+    }
+
+    .dashboard {
+      display: grid;
+      grid-template-areas:
+        "sidebar header"
+        "sidebar main";
+      grid-template-columns: 250px 1fr;
+      grid-template-rows: 70px 1fr;
+      min-height: 100vh;
+    }
+
+    .header {
+      grid-area: header;
+      background: white;
+      border-bottom: 1px solid #e0e0e0;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 2rem;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      position: relative;
+      z-index: 100;
+    }
+
+    .header h1 {
+      color: #333;
+      font-size: 1.5rem;
+    }
+
+    .user-info {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .user-avatar {
+      width: 40px;
+      height: 40px;
+      background: #007bff;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-weight: bold;
+    }
+
+    .sidebar {
+      grid-area: sidebar;
+      background: #2c3e50;
+      color: white;
+      padding: 2rem 0;
+      position: relative;
+      z-index: 50;
+    }
+
+    .logo {
+      text-align: center;
+      padding: 1rem;
+      font-size: 1.5rem;
+      font-weight: bold;
+      border-bottom: 1px solid #34495e;
+      margin-bottom: 2rem;
+    }
+
+    .nav-menu {
+      list-style: none;
+    }
+
+    .nav-item {
+      padding: 1rem 2rem;
+      cursor: pointer;
+      transition: background 0.3s;
+      border-left: 3px solid transparent;
+    }
+
+    .nav-item:hover {
+      background: #34495e;
+      border-left-color: #3498db;
+    }
+
+    .nav-item.active {
+      background: #34495e;
+      border-left-color: #3498db;
+    }
+
+    .main-content {
+      grid-area: main;
+      padding: 2rem;
+      overflow-y: auto;
+    }
+
+    .stats-grid {
+      display: flex;
+      gap: 1.5rem;
+      margin-bottom: 2rem;
+      flex-wrap: wrap;
+    }
+
+    .stat-card {
+      flex: 1;
+      min-width: 200px;
+      background: white;
+      padding: 1.5rem;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      border-left: 4px solid #3498db;
+    }
+
+    .stat-card h3 {
+      color: #7f8c8d;
+      font-size: 0.9rem;
+      margin-bottom: 0.5rem;
+      text-transform: uppercase;
+    }
+
+    .stat-card .value {
+      font-size: 2rem;
+      font-weight: bold;
+      color: #2c3e50;
+    }
+
+    .content-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      gap: 1.5rem;
+      margin-bottom: 2rem;
+    }
+
+    .content-card {
+      background: white;
+      padding: 1.5rem;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+
+    .content-card h2 {
+      color: #2c3e50;
+      margin-bottom: 1rem;
+      font-size: 1.2rem;
+    }
+
+    .activity-item {
+      display: flex;
+      align-items: center;
+      padding: 0.5rem 0;
+      border-bottom: 1px solid #ecf0f1;
+    }
+
+    .activity-item:last-child {
+      border-bottom: none;
+    }
+
+    .activity-dot {
+      width: 8px;
+      height: 8px;
+      background: #3498db;
+      border-radius: 50%;
+      margin-right: 1rem;
+    }
+
+    .img-placeholder {
+      height: 200px;
+      background: #ecf0f1;
+      border-radius: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #7f8c8d;
+      font-style: italic;
+      overflow: hidden;
+    }
+
+    .logo-img {
+      max-width: 100%;
+      aspect-ratio: 5/3;
+      min-width: 100%;
+      min-height: 100%;
+    }
+
+    .mobile-menu {
+      display: none;
+      background: none;
+      border: none;
+      font-size: 1.5rem;
+      cursor: pointer;
+      padding: 0.5rem;
+      border-radius: 4px;
+      transition: background 0.3s;
+    }
+
+    .mobile-menu:hover {
+      background: rgba(0,0,0,0.1);
+    }
+
+    .mobile-sidebar {
+      position: fixed;
+      top: 0;
+      left: -250px;
+      width: 250px;
+      height: 100vh;
+      background: #2c3e50;
+      color: white;
+      padding: 2rem 0;
+      transition: left 0.3s ease;
+      z-index: 1000;
+    }
+
+    .mobile-sidebar.active {
+      left: 0;
+    }
+
+    .mobile-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.5);
+      z-index: 999;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.3s ease, visibility 0.3s ease;
+    }
+
+    .mobile-overlay.active {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .close-btn {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      background: none;
+      border: none;
+      color: white;
+      font-size: 1.5rem;
+      cursor: pointer;
+      padding: 0.5rem;
+      border-radius: 4px;
+      transition: background 0.3s;
+    }
+
+    .close-btn:hover {
+      background: rgba(255,255,255,0.1);
+    }
+
+    .quick-actions {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+
+    .action-btn {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      border: none;
+      padding: 1rem;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 0.9rem;
+      font-weight: 500;
+      transition: transform 0.2s, box-shadow 0.2s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+    }
+
+    .action-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    }
+
+    .action-btn.secondary {
+      background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+    }
+
+    .action-btn.success {
+      background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+    }
+
+    .action-btn.warning {
+      background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+    }
+
+    @media (max-width: 768px) {
+      .dashboard {
+        grid-template-areas:
+          "header"
+          "main";
+        grid-template-columns: 1fr;
+        grid-template-rows: 70px 1fr;
+      }
+
+      .sidebar {
+        display: none;
+      }
+
+      .mobile-menu {
+        display: block;
+      }
+
+      .stats-grid {
+        flex-direction: column;
+      }
+
+      .content-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .main-content {
+        padding: 1rem;
+      }
+
+      .user-info span {
+        display: none;
+      }
+
+      .quick-actions {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="mobile-overlay" id="mobileOverlay"></div>
+  
+  <div class="dashboard">
+    <header class="header">
+      <button class="mobile-menu" id="mobileMenuBtn">☰</button>
+      <h1>Dashboard</h1>
+      <div class="user-info">
+        <span>yuvraj yadav</span>
+        <div class="user-avatar">YY</div>
+      </div>
+    </header>
+
+    <aside class="sidebar">
+      <div class="logo">MyApp</div>
+      <nav>
+        <ul class="nav-menu">
+          <li class="nav-item active">📊 Dashboard</li>
+          <li class="nav-item">👥 Users</li>
+          <li class="nav-item">📈 Analytics</li>
+          <li class="nav-item">💰 Sales</li>
+          <li class="nav-item">📄 Reports</li>
+          <li class="nav-item">⚙️ Settings</li>
+        </ul>
+      </nav>
+    </aside>
+
+    <aside class="mobile-sidebar" id="mobileSidebar">
+      <button class="close-btn" id="closeSidebarBtn">✕</button>
+      <div class="logo">MyApp</div>
+      <nav>
+        <ul class="nav-menu">
+          <li class="nav-item active">📊 Dashboard</li>
+          <li class="nav-item">👥 Users</li>
+          <li class="nav-item">📈 Analytics</li>
+          <li class="nav-item">💰 Sales</li>
+          <li class="nav-item">📄 Reports</li>
+          <li class="nav-item">⚙️ Settings</li>
+        </ul>
+      </nav>
+    </aside>
+
+    <main class="main-content">
+      <div class="stats-grid">
+        <div class="stat-card">
+          <h3>Total Users</h3>
+          <div class="value">1,234</div>
+        </div>
+        <div class="stat-card">
+          <h3>Revenue</h3>
+          <div class="value">$45,678</div>
+        </div>
+        <div class="stat-card">
+          <h3>Orders</h3>
+          <div class="value">567</div>
+        </div>
+        <div class="stat-card">
+          <h3>Growth</h3>
+          <div class="value">+12%</div>
+        </div>
+      </div>
+
+      <div class="content-grid">
+        <div class="content-card">
+          <div class="img-placeholder">
+            <img src="https://imagedelivery.net/PGxBruPsHcUTBcD6BtDn3A/3f7adf08-bbd1-4887-91e4-74b80c5f9e00/public" alt="Omniful Logo" class="logo-img">
+          </div>
+        </div>
+
+        <div class="content-card">
+          <h2>Recent Activity</h2>
+          <div class="activity-item">
+            <div class="activity-dot"></div>
+            <div>New user registered</div>
+          </div>
+          <div class="activity-item">
+            <div class="activity-dot"></div>
+            <div>Sale completed</div>
+          </div>
+          <div class="activity-item">
+            <div class="activity-dot"></div>
+            <div>Report generated</div>
+          </div>
+          <div class="activity-item">
+            <div class="activity-dot"></div>
+            <div>System updated</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="content-card">
+        <h2>Quick Actions</h2>
+        <p>Manage your dashboard with these quick action buttons for common tasks.</p>
+        <div class="quick-actions">
+          <button class="action-btn">
+            <span>➕</span>
+            Add New User
+          </button>
+          <button class="action-btn secondary">
+            <span>📊</span>
+            Generate Report
+          </button>
+          <button class="action-btn success">
+            <span>📧</span>
+            Send Newsletter
+          </button>
+          <button class="action-btn warning">
+            <span>⚙️</span>
+            System Settings
+          </button>
+          <button class="action-btn">
+            <span>📈</span>
+            View Analytics
+          </button>
+          <button class="action-btn secondary">
+            <span>💾</span>
+            Backup Data
+          </button>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script>
+    const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+    const mobileSidebar = document.getElementById('mobileSidebar');
+    const mobileOverlay = document.getElementById('mobileOverlay');
+    const closeSidebarBtn = document.getElementById('closeSidebarBtn');
+
+    function openSidebar() {
+      mobileSidebar.classList.add('active');
+      mobileOverlay.classList.add('active');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeSidebar() {
+      mobileSidebar.classList.remove('active');
+      mobileOverlay.classList.remove('active');
+      document.body.style.overflow = '';
+    }
+
+    mobileMenuBtn.addEventListener('click', openSidebar);
+    closeSidebarBtn.addEventListener('click', closeSidebar);
+    mobileOverlay.addEventListener('click', closeSidebar);
+
+    document.querySelectorAll('.nav-item').forEach(item => {
+      item.addEventListener('click', function() {
+        document.querySelectorAll('.nav-item').forEach(navItem => {
+          navItem.classList.remove('active');
+        });
+        this.classList.add('active');
+        
+        const mobileSidebarItem = document.querySelector('.mobile-sidebar .nav-item.active');
+        if (mobileSidebarItem) {
+          mobileSidebarItem.classList.remove('active');
+        }
+        
+        if (window.innerWidth <= 768) {
+          closeSidebar();
+        }
+      });
+    });
+
+    document.querySelectorAll('.action-btn').forEach(btn => {
+      btn.addEventListener('click', function() {
+        const action = this.textContent.trim();
+        alert(`Action: ${action} clicked!`);
+      });
+    });
+
+    window.addEventListener('resize', function() {
+      if (window.innerWidth > 768) {
+        closeSidebar();
+      }
+    });
+  </script>
+</body>
+</html>
