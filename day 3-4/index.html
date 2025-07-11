@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>assignment (day 3 & 4)</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    
+
+    <div id="scrollInfo" class="scroll-info">
+        <div>Scroll Progress Bar ( Throttle )</div>
+        <div>Progress: <span id="scrollPercent">0</span>%</div>
+        <div>Throttle calls: <span id="throttleCount">0</span></div>
+        <div>Limit: 100ms</div>
+    </div>
+
+    <div id="scrollIndicator" class="scroll-indicator"></div>
+    
+    <nav class="navbar">
+        <div class="navbar-container">
+            <a href="#" class="navbar-brand">Omniful</a>
+            
+            <div class="navbar-search">
+
+
+
+
+                <input 
+                    type="text" 
+                    id="searchInput"
+                    placeholder="Search... (debounced 400ms)"
+                    autocomplete="off"
+                >
+                <div id="searchResults"></div>
+            </div>
+
+            <ul class="navbar-menu">
+                <li class="name">yuvraj yadav</li>
+
+            </ul>
+        </div>
+    </nav>
+
+    <main class="main-content">
+        <section class="hero">
+            <h1>Debounce demo</h1>
+            <p>400 ms debounce in search bar</p>
+        </section>
+
+        <section class="demo-section">
+            <h2>Throttled Scroll Demo</h2>
+            <p>Scroll this page and watch the progress bar and throttle calls. The scroll handler only executes once every 100ms!</p>
+        </section>
+
+        <section class="demo-section">
+            <h2>Custom Array Methods</h2>
+            <p>Map, filter, and reduce implemented from scratch</p>
+            
+            <div class="form-row">
+                <input type="text" id="arrayInput" placeholder="Enter numbers: 1,2,3,4,5" class="array-input">
+                <button id="arrayTest" class="btn-primary">
+                    Test Array Methods
+                </button>
+            </div>
+            
+            <div id="arrayResults" class="results-container">
+                <div>Original: <span id="originalArray"></span></div>
+                <div>Map (×2): <span id="mapResult"></span></div>
+                <div>Filter (even): <span id="filterResult"></span></div>
+                <div>Reduce (sum): <span id="reduceResult"></span></div>
+            </div>
+        </section>
+
+
+
+
+
+
+        
+        <section class="demo-section">
+            <h2> Local Storage Manager</h2>
+            <p>Type-safe localStorage wrapper with automatic JSON serialization</p>
+            
+            <div class="form-row">
+                <input type="text" id="storageKey" placeholder="Key (e.g., user-settings)" class="storage-key">
+                <input type="text" id="storageValue" placeholder='Value (e.g., {"theme": "dark"})' class="storage-value">
+            </div>
+            
+            <div class="form-row">
+                <button id="setStorage" class="btn-success">
+                    Set
+                </button>
+                <button id="getStorage" class="btn-primary">
+                    Get
+                </button>
+                <button id="removeStorage" class="btn-danger">
+                    Remove
+                </button>
+            </div>
+            
+            <div id="storageResults" class="results-container">
+                <div id="storageOutput"></div>
+            </div>
+
+            
+        </section>
+
+
+        <section class="demo-section">
+            <h2> Type Checkers</h2>
+            <p>Advanced type checking utilities with detailed type information</p>
+            
+            <div class="form-row">
+                <textarea id="typeInput" placeholder='Enter anything' class="type-textarea"></textarea>
+            </div>
+            
+            <div class="form-row">
+                <button id="checkType" class="btn-purple">
+                    Check Type
+                </button>
+            </div>
+            
+            <div id="typeResults" class="results-container">
+                <div id="typeOutput"></div>
+            </div>
+        </section>
+        <section class="demo-section">
+            <h2> Deep Merge</h2>
+            <p>Recursively merge objects while preserving nested structures</p>
+            
+            <div class="form-row flex-container">
+                <div>
+                    <label class="form-label">Target Object:</label>
+                    <textarea id="targetObject" placeholder='{"a": 1, "b": {"x": 10}}' class="object-textarea"></textarea>
+                </div>
+                <div>
+                    <label class="form-label">Source Object:</label>
+                    <textarea id="sourceObject" placeholder='{"b": {"y": 20}, "c": 3}' class="object-textarea"></textarea>
+                </div>
+            </div>
+            
+            <div class="form-row">
+                <button id="deepMergeTest" class="btn-info">
+                    Deep Merge
+                </button>
+            </div>
+            
+            <div id="deepMergeResults" class="merge-results">
+                <div>
+                    <strong>Merged Result:</strong>
+                    <pre id="mergeResult" class="code-result"></pre>
+                </div>
+            </div>
+        </section>
+
+        <section class="demo-section">
+            <h2> Promise Chain</h2>
+            <p>Sequential Current Weather API calls for Indian cities with progress tracking</p>
+            
+            <div class="form-row flex-column">
+                <div class="checkbox-container">
+                    <label class="checkbox-label">
+                        <input type="checkbox" id="apiMumbai" checked> Mumbai
+                    </label>
+                    <label class="checkbox-label">
+                        <input type="checkbox" id="apiDelhi" checked> Delhi
+                    </label>
+                    <label class="checkbox-label">
+                        <input type="checkbox" id="apiBangalore" checked> Bangalore
+                    </label>
+                    <label class="checkbox-label">
+                        <input type="checkbox" id="apiChennai"> Chennai
+                    </label>
+                    <label class="checkbox-label">
+                        <input type="checkbox" id="apiKolkata"> Kolkata
+                    </label>
+                </div>
+                
+                <div class="button-container">
+                    <button id="executeChain" class="btn-large">
+                       Execute Chain
+                    </button>
+                </div>
+                
+                <div id="promiseProgress" class="progress-container">
+                    <div id="progressBar" class="progress-bar"></div>
+                </div>
+                
+                <div id="promiseStatus" class="promise-status"></div>
+            </div>
+            
+            <div id="promiseResults" class="promise-results">
+                <div id="promiseOutput" class="promise-output"></div>
+            </div>
+        </section>
+    </main>
+
+    <script type="module" src="main.js"></script>
+</body>
+</html>
+
