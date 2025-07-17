@@ -4,17 +4,18 @@ import { fetchProducts } from '../store/slices/productsSlice'
 
 const useInfiniteScroll = () => {
   const dispatch = useDispatch()
-  const { loading, hasMore, page } = useSelector(state => state.products)
+  const { loading, hasMore, page, searchTerm } = useSelector(state => state.products)
 
   const loadMore = useCallback(() => {
-    if (!loading && hasMore) {
+    if (!loading && hasMore && !searchTerm) {
       dispatch(fetchProducts({ page: page + 1, limit: 10 }))
     }
-  }, [dispatch, loading, hasMore, page])
+  }, [dispatch, loading, hasMore, page, searchTerm])
 
   useEffect(() => {
     const handleScroll = () => {
       if (
+        !searchTerm &&
         window.innerHeight + document.documentElement.scrollTop
         >= document.documentElement.offsetHeight - 1000
       ) {
@@ -24,7 +25,7 @@ const useInfiniteScroll = () => {
 
     window.addEventListener('scroll', handleScroll)
     return () => window.removeEventListener('scroll', handleScroll)
-  }, [loadMore])
+  }, [loadMore, searchTerm])
 
   return { loadMore }
 }

@@ -61,22 +61,18 @@ const Wishlist = () => {
                   <span className="text-lg font-bold text-gray-900">
                     ${product.price}
                   </span>
-                  {product.discount > 0 && (
-                    <span className="text-sm text-green-600 font-medium">
-                      {product.discount}% off
-                    </span>
-                  )}
+                 
                 </div>
                 <div className="space-y-2">
                   <button
                     onClick={() => handleMoveToCart(product)}
-                    className="w-full bg-blue-600 text-white px-3 py-2 rounded-md text-sm font-medium hover:bg-blue-700 transition-colors"
+                    className="w-full bg-blue-600 text-white px-3 py-2 rounded-md text-sm font-medium "
                   >
                     Move to Cart
                   </button>
                   <button
                     onClick={() => handleRemoveFromWishlist(product.id)}
-                    className="w-full bg-red-50 text-red-600 px-3 py-2 rounded-md text-sm font-medium border border-red-200 hover:bg-red-100 transition-colors"
+                    className="w-full px-3 text-red-500 py-2 rounded-md text-sm font-medium border border-black"
                   >
                     Remove
                   </button>

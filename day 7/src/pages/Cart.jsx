@@ -70,7 +70,7 @@ const Cart = () => {
                     </h3>
                     <p className="text-sm text-gray-500 mt-1">${item.price}</p>
                   </div>
-                  <div className="flex items-center space-x-3">
+                  <div className="flex items-center">
                     <button
                       onClick={() => handleDecreaseQuantity(item.id)}
                       className="w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center text-gray-600 hover:bg-gray-200"
@@ -89,11 +89,11 @@ const Cart = () => {
                   </div>
                   <div className="text-right">
                     <p className="text-sm font-medium text-gray-900">
-                      ${(item.price * item.quantity).toFixed(2)}
+                      ${(item.price * item.quantity)}
                     </p>
                     <button
                       onClick={() => handleRemoveItem(item.id)}
-                      className="text-red-600 text-sm hover:text-red-800 mt-1"
+                      className="text-red-600 text-sm  mt-1"
                     >
                       Remove
                     </button>
@@ -108,12 +108,12 @@ const Cart = () => {
                   Total Items: {totalItems}
                 </span>
                 <span className="text-xl font-bold text-gray-900">
-                  Total: ${total.toFixed(2)}
+                  Total: ${total}
                 </span>
               </div>
               <button
                 onClick={handleCheckout}
-                className="w-full bg-blue-600 text-white py-3 px-4 rounded-md font-medium hover:bg-blue-700 transition-colors"
+                className="w-full bg-blue-600 text-white py-3 px-4 rounded-md font-medium "
               >
                 Checkout
               </button>

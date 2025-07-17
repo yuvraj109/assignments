@@ -9,34 +9,20 @@ export const fetchProducts = createAsyncThunk(
   }
 )
 
-export const fetchCategories = createAsyncThunk(
-  'products/fetchCategories',
-  async () => {
-    const response = await fetch('https://fakestoreapi.in/api/products/category')
-    const data = await response.json()
-    return data
-  }
-)
-
 const productsSlice = createSlice({
   name: 'products',
   initialState: {
     items: [],
-    categories: [],
     loading: false,
     error: null,
     hasMore: true,
     page: 1,
     searchTerm: '',
-    selectedCategory: '',
     total: 0,
   },
   reducers: {
     setSearchTerm: (state, action) => {
       state.searchTerm = action.payload
-    },
-    setSelectedCategory: (state, action) => {
-      state.selectedCategory = action.payload
     },
     resetProducts: (state) => {
       state.items = []
@@ -69,19 +55,8 @@ const productsSlice = createSlice({
         state.loading = false
         state.error = action.error.message
       })
-      .addCase(fetchCategories.pending, (state) => {
-        state.loading = true
-      })
-      .addCase(fetchCategories.fulfilled, (state, action) => {
-        state.loading = false
-        state.categories = action.payload.categories
-      })
-      .addCase(fetchCategories.rejected, (state, action) => {
-        state.loading = false
-        state.error = action.error.message
-      })
   },
 })
 
-export const { setSearchTerm, setSelectedCategory, resetProducts } = productsSlice.actions
+export const { setSearchTerm, resetProducts } = productsSlice.actions
 export default productsSlice.reducer

@@ -91,7 +91,6 @@ export function selectCartTotalItems(state) {
 export function selectFilteredProducts(state) {
   const allProducts = state.products.items;
   const searchTerm = state.products.searchTerm;
-  const selectedCategory = state.products.selectedCategory;
   
   const filteredProducts = [];
   
@@ -113,13 +112,7 @@ export function selectFilteredProducts(state) {
       matchesSearch = foundInTitle || foundInDescription;
     }
     
-    let matchesCategory = true; 
-    
-    if (selectedCategory && selectedCategory.length > 0) {
-      matchesCategory = product.category === selectedCategory;
-    }
-    
-    if (matchesSearch && matchesCategory) {
+    if (matchesSearch) {
       filteredProducts.push(product);
     }
   }
