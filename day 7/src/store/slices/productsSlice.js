@@ -47,7 +47,7 @@ const productsSlice = createSlice({
         }
         
         state.page = page
-        state.hasMore = products.length > 10
+        state.hasMore = products.length >= 10
       })
       .addCase(fetchProducts.rejected, (state, action) => {
         state.loading = false
