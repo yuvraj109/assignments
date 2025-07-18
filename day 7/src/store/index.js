@@ -11,12 +11,6 @@ export const store = configureStore({
     wishlist: wishlistReducer,
     orders: ordersReducer,
   },
-  middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware({
-      serializableCheck: {
-        ignoredActionTypes: ['persist/PERSIST', 'persist/REHYDRATE'],
-      },
-    }),
   devTools: process.env.NODE_ENV !== 'production',
 })
 

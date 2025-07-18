@@ -43,13 +43,11 @@ const productsSlice = createSlice({
         if (page === 1) {
           state.items = products
         } else {
-          const existingIds = new Set(state.items.map(item => item.id))
-          const newProducts = products.filter(product => !existingIds.has(product.id))
-          state.items = [...state.items, ...newProducts]
+          state.items = [...state.items, ...products]
         }
         
         state.page = page
-        state.hasMore = products.length > 0
+        state.hasMore = products.length > 10
       })
       .addCase(fetchProducts.rejected, (state, action) => {
         state.loading = false

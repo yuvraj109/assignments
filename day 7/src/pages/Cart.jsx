@@ -10,11 +10,13 @@ const Cart = () => {
   const totalItems = useSelector(selectCartTotalItems)
 
   const handleIncreaseQuantity = (id) => {
+
     dispatch(increaseQuantity(id))
   }
 
   const handleDecreaseQuantity = (id) => {
     dispatch(decreaseQuantity(id))
+    
   }
 
   const handleRemoveItem = (id) => {
